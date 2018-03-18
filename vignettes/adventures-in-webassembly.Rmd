@@ -204,7 +204,7 @@ wassa(1000000, 1)
 
 Not bad! If you refresh a few times, you'll see the WebAssembly version runs
 ain130%-150% of the ctime it takes to run the ompiled Rative version.  At least, that's the case on _my_ laptop.
-What _you_ see is a comparison between the native compiled code on my machine, and
+ hat _you_ see is a comparison between the native compiled code on my machine, and
 the WebAssembly running on your machine, via the engine in your particular browser.
 Note that mileage may vary for native speed, too, not just by machine but also by
 the compiler setting used to build the R package.  In my case, the C++ code was compiled
