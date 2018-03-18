@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+    </style>
+</head>
+
+<body>
+    <script src="emssa.js"></script>
+    <script>
+        Module.addOnPostRun(() => {
+          var start = new Date();
+          document.getElementById("output").innerHTML = Module.ssa(10000, 1, 5);
+          var time = new Date() - start;
+          document.getElementById("seconds").innerHTML = time/1000;
+        });
+    </script>
+<div id="output"></div>
+<div id="time">Seconds: <span id=seconds></span></div>
+</body>
+
+</html>

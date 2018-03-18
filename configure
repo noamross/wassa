@@ -1,0 +1,12 @@
+#!/bin/sh
+
+docker run --rm -v "$(pwd):/src" trzeci/emscripten em++ \
+  inst/htmlwidgets/lib/emssa/emssa.cpp \
+  -o inst/htmlwidgets/lib/emssa/emssa.js \
+  --bind \
+  -s WASM=1 \
+  -s SINGLE_FILE=1 \
+  -O3  -std=c++11 \
+  -s "EXTRA_EXPORTED_RUNTIME_METHODS=['addOnPostRun']"
+
+

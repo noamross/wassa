@@ -1,0 +1,8 @@
+dependencies:
+  - name: emssa
+    version: 0.0.1
+    src: htmlwidgets/lib/emssa
+    script:
+      - emssa.js
+
+

@@ -1,0 +1,20 @@
+Package: wassa
+Version: 0.0.1
+Title: Web Assembly Stochastic Simulation Algorithm
+Description: A very experimental polyglot package.
+Authors@R: person("Noam", "Ross", , "noam.ross@gmail.com", c("aut", "cre"))
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+LinkingTo:
+    Rcpp
+Imports:
+    Rcpp,
+    htmlwidgets
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.0.1
+Suggests: knitr,
+    rmarkdown,
+    microbenchmark
+VignetteBuilder: knitr
