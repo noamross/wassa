@@ -279,7 +279,7 @@ int rssa(double rate, double max_time, unsigned seed = 0) {
 <p>Then I wrote <em>another</em> wrapper, this one to export the same function to WebAssembly and JavaScript via <a href="https://kripken.github.io/emscripten-site/">emscripten</a>, which is the dominant compiler for this. As this code will eventually be part of an htmlwidget, I put it in. <code>inst/htmlwidgets/lib/emssa/emssa.cpp</code>:</p>
 <pre><code>// quick_example.cpp
 #include &lt;emscripten/bind.h&gt;
-#include  &quot;../../../../src/ssa.h&quot;
+#include  &quot;../../../../src/ssa.h&quot;  //there' probably a better way to do this
 
 using namespace emscripten;
 
@@ -344,7 +344,7 @@ wassa &lt;- function(rate, max_time, seed = 0) {
           var time = window.performance.now() - start;  //stop timing
           el.innerHTML = '&lt;strong&gt;Output: ' + result +  '&lt;br /&gt;' + //print results
                          'Time Elapsed: ' + Math.round(time) + ' milliseconds&lt;/strong&gt;';
-          el.style.setAttribute(&quot;style&quot;, &quot;margin:5px; padding:5px; border: thin solid #0000FF;&quot;);
+          el.setAttribute(&quot;style&quot;, &quot;margin:5px; padding:5px; border: thin solid #0000FF;&quot;);
         });
       },
       resize: function(width, height) {}
@@ -359,31 +359,29 @@ wassa &lt;- function(rate, max_time, seed = 0) {
 <p>First, here’s the <code>rssa()</code> function which is the Rcpp wrapper for the C++ code:</p>
 <pre class="r"><code>library(wassa)
 rssa(1000, 1)
-#&gt; [1] 1056</code></pre>
+#&gt; [1] 1084</code></pre>
 <p>Now, htmlwidget version. If everything works right, you’ll see the widget output in a blue box<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a>:</p>
 <pre class="r"><code>wassa(1000, 1)</code></pre>
-<div id="htmlwidget-da6a03e43613c6003644" style="width:100%;height:100%;" class="wassa html-widget"></div>
-<script type="application/json" data-for="htmlwidget-da6a03e43613c6003644">{"x":{"rate":1000,"max_time":1,"seed":0},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-600e9e6b427969dac33b" style="width:100%;height:100%;" class="wassa html-widget"></div>
+<script type="application/json" data-for="htmlwidget-600e9e6b427969dac33b">{"x":{"rate":1000,"max_time":1,"seed":0},"evals":[],"jsHooks":[]}</script>
 <p>It works (for me, at least)! My C++ code is running in the browser. If you refresh the page, you’ll see that the widget output in the blue box changes each time. No server is needed - these calculations take place on your machine.</p>
 <p>To make sure that both the R and widget versions of the code are doing the same thing, I can run the functions with the same random seed and check that outputs are the same:</p>
 <pre class="r"><code>rssa(1000, 1, seed=10)
 #&gt; [1] 1037
 wassa(1000, 1, seed=10)</code></pre>
-<div id="htmlwidget-80e51fdda04047267630" style="width:100%;height:100%;" class="wassa html-widget"></div>
-<script type="application/json" data-for="htmlwidget-80e51fdda04047267630">{"x":{"rate":1000,"max_time":1,"seed":10},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-419e9c93e5bb6bcb2c1f" style="width:100%;height:100%;" class="wassa html-widget"></div>
+<script type="application/json" data-for="htmlwidget-419e9c93e5bb6bcb2c1f">{"x":{"rate":1000,"max_time":1,"seed":10},"evals":[],"jsHooks":[]}</script>
 <p>👍 !</p>
 <p>How does performance compare? I run the function at a higher rate, which will require more iterations, and benchmark:</p>
 <pre class="r"><code>library(microbenchmark)
 microbenchmark(rssa(1000000, 1), times = 200, unit = 'ms')
 #&gt; Unit: milliseconds
-#&gt;            expr      min       lq     mean   median       uq      max
-#&gt;  rssa(1e+06, 1) 30.23832 32.08754 38.66871 34.50145 41.63698 111.4369
-#&gt;  neval
-#&gt;    200
+#&gt;            expr      min      lq     mean   median       uq      max neval
+#&gt;  rssa(1e+06, 1) 30.10382 32.6794 35.19253 34.29292 36.78482 55.40013   200
 wassa(1000000, 1)</code></pre>
-<div id="htmlwidget-3ea77abb25abf4c85e93" style="width:100%;height:100%;" class="wassa html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3ea77abb25abf4c85e93">{"x":{"rate":1000000,"max_time":1,"seed":0},"evals":[],"jsHooks":[]}</script>
-<p>Not bad! If you refresh a few times, you’ll see the WebAssembly version runs at 130%-150% of the compiled R native version. At least, that’s the case on <em>my</em> laptop. What <em>you</em> see is a comparison between the native compiled code on my machine, and the WebAssembly running on your machine, via the engine in your particular browser. Note that mileage may vary for native speed, too, not just by machine but also by the compiler setting used to build the R package. In my case, the C++ code was compiled with clang 9.0.0 and he <code>-O3</code> flag, the max level of optimization, just as empscripten was.</p>
+<div id="htmlwidget-2490f353556f9a0e2463" style="width:100%;height:100%;" class="wassa html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2490f353556f9a0e2463">{"x":{"rate":1000000,"max_time":1,"seed":0},"evals":[],"jsHooks":[]}</script>
+<p>Not bad! If you refresh a few times, you’ll see the WebAssembly version runs at 130%-150% of the compiled R native version. At least, that’s the case on <em>my</em> laptop. What <em>you</em> see is a comparison between the native compiled code on my machine, and the WebAssembly running on your machine, via the engine in your particular browser. Note that mileage may vary for native speed, too, not just by machine but also by the compiler setting used to build the R package. In my case, the C++ code was compiled with clang 9.0.0 and the <code>-O3</code> flag, the max level of optimization, just as empscripten was.</p>
 </div>
 <div class="footnotes">
 <hr />
