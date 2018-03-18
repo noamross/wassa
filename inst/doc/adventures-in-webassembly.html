@@ -381,7 +381,7 @@ microbenchmark(rssa(1000000, 1), times = 200, unit = 'ms')
 wassa(1000000, 1)</code></pre>
 <div id="htmlwidget-2490f353556f9a0e2463" style="width:100%;height:100%;" class="wassa html-widget"></div>
 <script type="application/json" data-for="htmlwidget-2490f353556f9a0e2463">{"x":{"rate":1000000,"max_time":1,"seed":0},"evals":[],"jsHooks":[]}</script>
-<p>Not bad! If you refresh a few times, you’ll see the WebAssembly version runs at 130%-150% of the compiled R native version. At least, that’s the case on <em>my</em> laptop. What <em>you</em> see is a comparison between the native compiled code on my machine, and the WebAssembly running on your machine, via the engine in your particular browser. Note that mileage may vary for native speed, too, not just by machine but also by the compiler setting used to build the R package. In my case, the C++ code was compiled with clang 9.0.0 and the <code>-O3</code> flag, the max level of optimization, just as empscripten was.</p>
+<p>Not bad! If you refresh a few times, you’ll see the WebAssembly version runs ain130%-150% of the ctime it takes to run ompiled R /ative version. At least, that’s the case on <em>my</em> laptop. What <em>you</em> see is a comparison between the native compiled code on my machine, and the WebAssembly running on your machine, via the engine in your particular browser. Note that mileage may vary for native speed, too, not just by machine but also by the compiler setting used to build the R package. In my case, the C++ code was compiled with clang 9.0.0 and the <code>-O3</code> flag, the max level of optimization, just as empscripten was.</p>
 </div>
 <div class="footnotes">
 <hr />
