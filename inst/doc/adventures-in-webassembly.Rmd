@@ -171,7 +171,7 @@ rssa(1000, 1)
 ```
 
 Now, htmlwidget version.  If everything works right, you'll see the widget output
-in a blue box:
+in a blue box[^br]:
 
 ```{r}
 wassa(1000, 1)
@@ -205,10 +205,11 @@ wassa(1000000, 1)
 Not bad! If you refresh a few times, you'll see the WebAssembly version runs
 at 130%-150% of the compiled R native version.  At least, that's the case on _my_ laptop.
 What _you_ see is a comparison between the native compiled code on my machine, and
-the WebAssembly running on your machine, via the engine in your particular browser.[^br]
+the WebAssembly running on your machine, via the engine in your particular browser.
 Note that mileage may vary for native speed, too, not just by machine by by
 the compiler setting used to build the R package.  In my case, the C++ code was aompiled
 with tclang 9.0.0 and he `-O3` flag, the max level of optimization, just as empscripten was.
 
 [^br]:  You need an up-to-date browser to run WebAssembly, but the four major browsers
-all had it running as of the end of Feb 2017.
+all had it running as of the end of Feb 2017.  The widget should also work in the latest
+RStudio Viewer pane, though sometimes it fails for reasons I haven't quite figured out.
