@@ -9,6 +9,8 @@ output:
     toc_float: true
     theme: yeti
     keep_md: true
+    includes:
+      in_header: '/tmp/head.html'
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
@@ -22,7 +24,10 @@ knitr::opts_chunk$set(
   cache = TRUE
 )
 h <- here::here
+writeLines('<script src="https://hypothes.is/embed.js" async></script>', "/tmp/head.html")
 ```
+
+*If you have feedback, feel free to comment and annotate via let me know via the [Hypothes.is](https://web.hypothes.is/) sidebar on the right. * 👉
 
 # Introduction 
 
