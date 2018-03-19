@@ -27,7 +27,7 @@ h <- here::here
 writeLines('<script src="https://hypothes.is/embed.js" async></script>', "/tmp/head.html")
 ```
 
-*If you have feedback, feel free to comment and annotate via let me know via the [Hypothes.is](https://web.hypothes.is/) sidebar on the right. * 👉
+*Feel free to comment and annotate via the [Hypothes.is](https://web.hypothes.is/) sidebar on the right. * 👉
 
 # Introduction 
 
